@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Token Launch Radar — protocols that record no token yet, ranked by implied launch value</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">◎</div>
+    <div>
+      <h1>Token Launch Radar</h1>
+      <p class="sub">Protocols that <strong>record no token yet</strong> — ranked by what their launch would be worth if their record stayed as it is. Wrapped / staked derivatives of traded tokens are excluded. Every protocol on the snapshot's watchlist is on this board; the rest are the early finds below its floor.</p>
+    </div>
+  </div>
+  <div class="snap">Snapshot <b id="snapDate">—</b><br><span id="snapSrc">—</span></div>
+</header>
+
+<section class="stats" id="stats"></section>
+
+<section class="legend">
+  <span class="lg"><i class="dot watch"></i><b>Watch</b> — score ≥ 75 · farm actively, best value per unit of effort</span>
+  <span class="lg"><i class="dot caution"></i><b>Caution</b> — score 50–74 · farm passively, re-check monthly</span>
+  <span class="lg"><i class="dot skip"></i><b>Skip</b> — score &lt; 50 · implied value does not cover gas + time</span>
+</section>
+
+<section class="toolbar">
+  <input id="q" type="search" placeholder="Search protocol, category, chain…" aria-label="Search">
+  <div class="chips" id="verdictChips">
+    <button data-v="All" class="chip on">All</button>
+    <button data-v="Watch" class="chip">Watch</button>
+    <button data-v="Caution" class="chip">Caution</button>
+    <button data-v="Skip" class="chip">Skip</button>
+  </div>
+  <select id="fCat" aria-label="Category"><option value="">All categories</option></select>
+  <select id="fChain" aria-label="Chain"><option value="">All chains</option></select>
+  <select id="fSort" aria-label="Sort">
+    <option value="rank">Sort · Board rank (implied value)</option>
+    <option value="radarScore">Sort · Radar score</option>
+    <option value="tvlUsd">Sort · TVL</option>
+    <option value="change7dPct">Sort · 7d growth</option>
+    <option value="ageDays">Sort · Age</option>
+  </select>
+  <span class="count" id="rowCount"></span>
+</section>
+
+<main>
+  <div class="tablewrap">
+    <table>
+      <thead><tr>
+        <th>#</th><th>Protocol</th><th>Category</th><th>Chains</th>
+        <th class="r">TVL</th><th class="r">7d</th><th class="r">Age</th>
+        <th class="r">Implied value</th><th class="r">×TVL</th><th>Score</th><th>Verdict</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <p class="empty" id="empty" hidden>No protocols match the current filters.</p>
+  </div>
+
+  <aside id="detail" class="detail" hidden>
+    <button class="close" id="closeDetail" aria-label="Close">×</button>
+    <div id="detailBody"></div>
+  </aside>
+</main>
+
+<footer>
+  <b>Method:</b> Implied value = TVL × category multiple (0.62–1.80, fee-dense categories richest) × 7d-momentum factor (0.75–1.60) × maturity factor (0.90–1.10).
+  Radar score = TVL depth 34 · momentum 18 · maturity 16 · chain spread 12 · category quality 12 · watchlist 8.
+  Risk bars in the detail view: depth = TVL on a log scale, momentum = 7d TVL change, maturity = days tracked, spread = number of chains.
+  A ★ marks a protocol on the snapshot's own watchlist. An implied value is this board's claim about a launch that has not happened — not a prediction that it will. Click any row for its detail view and farm plan. Renders fully offline.
+</footer>
+
+<script src="../data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
